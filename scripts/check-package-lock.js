@@ -14,9 +14,9 @@ const filenames = process.argv.slice(2);
 for (const filename of filenames) {
   const packageLock = require(filename);
 
-  Object.keys(packageLock.dependencies).forEach(dependency => {
-    if (dependency.startsWith('@cloudscape')) {
-      delete packageLock.dependencies[dependency];
+  Object.keys(packageLock.packages).forEach(dependencyName => {
+    if (dependencyName.startsWith('node_modules/@cloudscape-design/')) {
+      delete packageLock.dependencies[dependencyName];
     }
   });
   fs.writeFileSync(filename, JSON.stringify(packageLock, null, 2) + '\n');
